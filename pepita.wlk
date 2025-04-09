@@ -2,31 +2,30 @@ object pepita {
 	var energia = 100
 	
 	method comer(comida) {
-		energia = energia + comida.energiaQueAporta()
+		energia += comida.energiaQueAporta()
 	}
 	
+	method energiaParaVolar(distancia) = 10 + distancia
+	
+	method puedeVolar(distancia) = energia >= self.energiaParaVolar(distancia)
+	
 	method volar(distancia) {
-		energia = energia - 10 - distancia
+		if (not self.puedeVolar(distancia)) self.error("no puede volar")
+		energia -= self.energiaParaVolar(distancia)
 	}
-		
-	method energia() {
-		return energia
-	}
+	
+	method energia() = energia
 }
 
 object alpiste {
-	method energiaQueAporta() {
-		return 20
-	}
+	method energiaQueAporta() = 20
 }
 
 object manzana {
 	var madurez = 1
 	const base = 5
 	
-	method madurez() {
-		return madurez
-	}
+	method madurez() = madurez
 	
 	method madurez(_madurez) {
 		madurez = _madurez
@@ -36,32 +35,31 @@ object manzana {
 		self.madurez(madurez + 1)
 	}
 	
-	method energiaQueAporta() {
-		return base * madurez
-	}
-	
+	method energiaQueAporta() = base * madurez
 }
 
 object pepon {
 	var energia = 30
 	
-	method energia() {
-		return energia
-	}
-		
+	method energia() = energia
+	
+	method energiaParaVolar(distancia) = 20 + (2 * distancia)
+	
+	method puedeVolar(distancia) = energia >= self.energiaParaVolar(distancia)
+	
 	method comer(comida) {
 		energia += comida.energiaQueAporta() / 2
 	}
-		
-	method volar(distancia) {
-		energia = energia - 20 - 2*distancia
-	}
 	
+	method volar(distancia) {
+		if (not self.puedeVolar(distancia)) self.error("no puede volar")
+		energia -= self.energiaParaVolar(distancia)
+	}
 }
 
 object roque {
 	var ave = pepita
-	var cenas = 0;
+	var cenas = 0
 	
 	method ave(_ave) {
 		ave = _ave
@@ -70,7 +68,8 @@ object roque {
 	
 	method alimentar(alimento) {
 		ave.comer(alimento)
-		cenas = cenas + 1
+		cenas += 1
 	}
+	
+	method cenas() = cenas
 }
-
