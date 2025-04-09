@@ -10,7 +10,7 @@ object pepita {
 	method puedeVolar(distancia) = energia >= self.energiaParaVolar(distancia)
 	
 	method volar(distancia) {
-		if (not self.puedeVolar(distancia)) self.error("no puede volar")
+		if (not self.puedeVolar(distancia)) self.error("No puede volar.")
 		energia -= self.energiaParaVolar(distancia)
 	}
 	
@@ -40,19 +40,26 @@ object manzana {
 
 object pepon {
 	var energia = 30
+	var ultimaComida = manzana
 	
 	method energia() = energia
 	
+	method ultimaComida() = ultimaComida
+
 	method energiaParaVolar(distancia) = 20 + (2 * distancia)
 	
 	method puedeVolar(distancia) = energia >= self.energiaParaVolar(distancia)
+
+	method puedeComer(comida) = not (ultimaComida == comida)
 	
 	method comer(comida) {
+		if (not self.puedeComer(comida)) self.error("No puede comer.")
+		ultimaComida = comida
 		energia += comida.energiaQueAporta() / 2
 	}
 	
 	method volar(distancia) {
-		if (not self.puedeVolar(distancia)) self.error("no puede volar")
+		if (not self.puedeVolar(distancia)) self.error("No puede volar.")
 		energia -= self.energiaParaVolar(distancia)
 	}
 }
@@ -72,4 +79,10 @@ object roque {
 	}
 	
 	method cenas() = cenas
+}
+
+object milena {
+	method movilizar(distancia) {
+		if () self.error("No puede movilizar a sus aves.")
+	}
 }
