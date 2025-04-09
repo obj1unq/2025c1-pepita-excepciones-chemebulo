@@ -45,11 +45,11 @@ object pepon {
 	method energia() = energia
 	
 	method ultimaComida() = ultimaComida
-
+	
 	method energiaParaVolar(distancia) = 20 + (2 * distancia)
 	
 	method puedeVolar(distancia) = energia >= self.energiaParaVolar(distancia)
-
+	
 	method puedeComer(comida) = not (ultimaComida == comida)
 	
 	method comer(comida) {
