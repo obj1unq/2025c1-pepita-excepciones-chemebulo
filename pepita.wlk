@@ -80,9 +80,3 @@ object roque {
 	
 	method cenas() = cenas
 }
-
-object milena {
-	method movilizar(distancia) {
-		if () self.error("No puede movilizar a sus aves.")
-	}
-}
