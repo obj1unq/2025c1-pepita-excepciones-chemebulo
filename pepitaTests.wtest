@@ -42,5 +42,28 @@ describe "Pepita, Pepon y Roque" {
     pepon.comer(manzana)
     assert.throwsException({ pepon.comer(manzana) })
     pepon.comer(alpiste)
+  } 
+  test "Tanto pepita como Pepón pueden volar 4 kms. Por lo tanto Milena puede movilizarlas." {
+    milena.agregarAve(pepita)
+    milena.agregarAve(pepon)
+    assert.that(milena.puedeMovilizarlas(4))
+  } 
+  test "Pepita puede volar 6 kms, pero Pepón no. Por lo tanto Milena no puede movilizarlas. ¡¡¡Si se intenta movilizarlas ambas deben quedar con su energia inicial!!!" { 
+    milena.agregarAve(pepita)
+    milena.agregarAve(pepon)
+    assert.notThat(milena.puedeMovilizarlas(6))
+
+    assert.throwsException({milena.movilizar(6)})
+    assert.equals(100, pepita.energia())
+    assert.equals(30, pepon.energia())
+  }
+
+  test "Ni Pepita, ni Pepón pueden volar 100 km." {
+    milena.agregarAve(pepita)
+    milena.agregarAve(pepon)
+    assert.notThat(milena.puedeMovilizarlas(100))
+
+    assert.notThat(pepita.puedeVolar(100))
+    assert.notThat(pepon.puedeVolar(100))
   }
 }
