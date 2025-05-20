@@ -1,15 +1,69 @@
 import pepita.*
 
-describe "Pepita, Pepon y Roque"{
+describe "Pepita, Pepon y Roque" {
+  test "Pepon al comer alpiste queda con energia en 40" {
+    pepon.comer(alpiste)
+    assert.equals(40, pepon.energia())
+  }
+  
+  test "Pepon al volar 3km queda con energia 4" {
+    pepon.volar(3)
+    assert.equals(4, pepon.energia())
+  }
+  
+  test "Roque alimenta a Pepon con alpiste y queda con energia 40" {
+    roque.ave(pepon)
+    roque.alimentar(alpiste)
+    assert.equals(40, pepon.energia())
+  }
+  
+  test "Roque alimenta a Pepita con alpiste y queda con energia 120" {
+    roque.ave(pepita)
+    roque.alimentar(alpiste)
+    assert.equals(120, pepita.energia())
+  }
+  
+  test "Pepita y Pepon pueden volar 4kms" {
+    assert.that(pepita.puedeVolar(4) && pepon.puedeVolar(4))
+  }
+  
+  test "Pepon no puede volar 6kms" {
+    assert.throwsException({ pepon.volar(6) })
+  }
+  
+  test "Ninguna de las dos aves puede volar 100kms" {
+    assert.throwsException({ pepita.volar(100) })
+    assert.throwsException({ pepon.volar(100) })
+  }
+  
+  test "Pepon puede comer alpiste pero no dos veces. Después, Pepon puede comer manzana pero no dos veces, pero si alpiste" {
+    pepon.comer(alpiste)
+    assert.throwsException({ pepon.comer(alpiste) })
+    pepon.comer(manzana)
+    assert.throwsException({ pepon.comer(manzana) })
+    pepon.comer(alpiste)
+  } 
+  test "Tanto pepita como Pepón pueden volar 4 kms. Por lo tanto Milena puede movilizarlas." {
+    milena.agregarAve(pepita)
+    milena.agregarAve(pepon)
+    assert.that(milena.puedeMovilizarlas(4))
+  } 
+  test "Pepita puede volar 6 kms, pero Pepón no. Por lo tanto Milena no puede movilizarlas. ¡¡¡Si se intenta movilizarlas ambas deben quedar con su energia inicial!!!" { 
+    milena.agregarAve(pepita)
+    milena.agregarAve(pepon)
+    assert.notThat(milena.puedeMovilizarlas(6))
 
-    test "La energia inicial de Pepon es 30"{
+    assert.throwsException({milena.movilizar(6)})
+    assert.equals(100, pepita.energia())
+    assert.equals(30, pepon.energia())
+  }
 
-        assert.fail("IMPLEMENTAR EL TEST!")
-    }
+  test "Ni Pepita, ni Pepón pueden volar 100 km." {
+    milena.agregarAve(pepita)
+    milena.agregarAve(pepon)
+    assert.notThat(milena.puedeMovilizarlas(100))
 
-    test "Pepon al comer alpiste queda con energia en 40"{
-
-        assert.fail("IMPLEMENTAR EL TEST!")
-    }
-
+    assert.notThat(pepita.puedeVolar(100))
+    assert.notThat(pepon.puedeVolar(100))
+  }
 }
